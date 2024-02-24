@@ -1,0 +1,531 @@
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Movie Hunter</title>
+<!--
+
+Template 2101 Insertion
+
+http://www.tooplate.com/view/2101-insertion
+
+-->
+  <!-- load CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">        <!-- Google web font "Open Sans" -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">                                            <!-- https://getbootstrap.com/ -->
+  <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">                                      <!-- Font awesome -->
+  <link rel="stylesheet" href="{% static 'css/tooplate-style.css' %}">                                           <!-- Templatemo style -->
+
+  <script>
+    var renderPage = true;
+
+    if (navigator.userAgent.indexOf('MSIE') !== -1
+      || navigator.appVersion.indexOf('Trident/') > 0) {
+      /* Microsoft Internet Explorer detected in. */
+      alert("Please view this in a modern browser such as Chrome or Microsoft Edge.");
+      renderPage = false;
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <!-- Loader -->
+  <div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+  </div>
+
+  <div class="tm-main">
+
+    <div class="tm-welcome-section">
+      <div class="container tm-navbar-container">
+        <div class="row">
+          <div class="col-xl-12">
+            <nav class="navbar navbar-expand-sm">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                  <a href="index.html" class="nav-link tm-nav-link tm-text-white active">Home</a>
+                </li>
+
+
+                  {% if user.is_authenticated %}
+                <li class="nav-link tm-nav-link tm-text-white">Hello {{user.username}}</li>
+                <li><a href="logout" class="nav-link tm-nav-link tm-text-white">Logout</a></li>
+                <li class="nav-item">
+                  <a href="/movieapp/add_movie" class="nav-link tm-nav-link tm-text-white">Add Movie</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/movieapprate/id" class="nav-link tm-nav-link tm-text-white">Add review</a>
+                </li>
+                {% else %}
+                <li><a href="register" class="nav-link tm-nav-link tm-text-white">Register</a></li>
+                <li><a href="login" class="nav-link tm-nav-link tm-text-white">Login</a></li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="container text-center tm-welcome-container">
+        <div class="tm-welcome">
+<!--          <i class="fas tm-fa-big fa-music tm-fa-mb-big"></i>-->
+          <h1 class="text-uppercase mb-3 tm-site-name">Movie Hunter</h1>
+          <p class="tm-site-description">Movie Lovers</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container">
+      <div class="tm-search-form-container">
+        <form action="/" method="GET" class="form-inline tm-search-form">
+          <div class="text-uppercase tm-new-release">New Release</div>
+          <div class="form-group tm-search-box">
+            <input type="text" name="" class="form-control tm-search-input" placeholder="Type your keyword ...">
+            <input type="submit" value="Search" class="form-control tm-search-submit">
+          </div>
+          <div class="form-group tm-advanced-box">
+            <a href="{{item.movie_cover.url}}" class="tm-text-white">Go Advanced ...</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="row tm-albums-container grid">
+
+        {% for item in items %}
+        <div class="col-lg-4 why_col">
+        <a href="{% url 'movieapp:detail' item.id %}"  class="btn btn-primary">More Details</a><br><br>
+
+<!--        <div class="col-sm-6 col-12 col-md-6 col-lg-3 col-xl-3 tm-album-col">-->
+          <figure class="effect-sadie">
+<!--            <div class="col">-->
+<!--              </div>-->
+            <img src="{{item.movie_cover.url}}" alt="Image" class="img-fluid">
+            <figcaption>
+              <h2>New Release</h2>
+              <p>{{item.title_upload_date}}</p>
+<!--               <p>{{i.director}}</p>-->
+<!--               <p>{{i.producer}}</p>-->
+<!--               <p>{{i.cast}}</p>-->
+
+            </figcaption>
+
+          </figure>
+<!--        </div>-->
+
+        </div>
+        {% endfor %}
+
+      </div>
+
+      <div class="grid-container">
+        <div class="row tm-mb-medium">
+           {% for review in review %}
+       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
+         <h4 class="mb-4 tm-font-300">{{review.author}}</h4>
+          <p>{{review.movie}}</p>
+<!--          <p>{{review.stars}}</p>-->
+            <div class="testimonial-person-star">
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+            </div>
+          <p>{{review.comment}}</p>
+        </div>
+           {% endfor %}
+        </div>
+
+      		<!--reviews start -->
+<!--		<section id="reviews" class="reviews">-->
+<!--			<div class="section-header">-->
+<!--				<h2>Movie reviews</h2>-->
+<!--				<p>What our client say about us</p>-->
+<!--			</div>&lt;!&ndash;/.section-header&ndash;&gt;-->
+
+<!--			<div class="reviews-content">-->
+<!--              <div class="testimonial-carousel">-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c1.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--                                   {% for review in review %}-->
+<!--									<h2>Tom Leakar</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--                                  {% endfor %}-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c2.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--									<h2>monirul islam</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c3.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--									<h2>Shohrab Hossain</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c4.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--									<h2>Tom Leakar</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c1.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--									<h2>Tom Leakar</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c2.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--									<h2>monirul islam</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c3.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--									<h2>Shohrab Hossain</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				    <div class="single-testimonial-box">-->
+<!--						<div class="testimonial-description">-->
+<!--							<div class="testimonial-info">-->
+<!--								<div class="testimonial-img">-->
+<!--									<img src="assets/images/clients/c4.png" alt="clients">-->
+<!--								</div>&lt;!&ndash;/.testimonial-img&ndash;&gt;-->
+<!--								<div class="testimonial-person">-->
+<!--									<h2>Tom Leakar</h2>-->
+<!--									<h4>london, UK</h4>-->
+<!--									<div class="testimonial-person-star">-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--										<i class="fa fa-star"></i>-->
+<!--									</div>-->
+<!--								</div>&lt;!&ndash;/.testimonial-person&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.testimonial-info&ndash;&gt;-->
+<!--							<div class="testimonial-comment">-->
+<!--								<p>-->
+<!--									Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis eaque.-->
+<!--								</p>-->
+<!--							</div>&lt;!&ndash;/.testimonial-comment&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.testimonial-description&ndash;&gt;-->
+<!--					</div>&lt;!&ndash;/.single-testimonial-box&ndash;&gt;-->
+<!--				</div>-->
+
+<!--			</div>-->
+<!--        </section>&lt;!&ndash;/.reviews&ndash;&gt;-->
+		<!--reviews end -->
+
+<!--      </div>-->
+
+
+
+
+      <div class="row mb-5">
+        <div class="col-xl-12">
+          <div class="media-boxes">
+            <div class="media">
+              <img src="{% static 'img/bahubali.jpg' %}" width="150px" height="150px" alt="Image" class="mr-3">
+              <div class="media-body tm-bg-gray">
+                <div class="tm-description-box">
+                  <h5 class="tm-text-blue">Bahubali</h5>
+                  <p class="mb-0">The Goat Life is an upcoming survival drama film written,and directed by Blessy.  It is an adaptation of the 2008 Malayalam novel by Benyamin, which is based on a true incident. <a href="https://google.com/search?q=aadujeevitham" target="_parent">aadujeevitham</a>. Thank you.</p>
+                </div>
+                <div class="tm-buy-box">
+                  <a href="#" class="tm-bg-blue tm-text-white tm-buy">buy</a>
+                  <span class="tm-text-blue tm-price-tag">$50.0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="media">
+              <img src="{% static 'img/minnalmurali.jpg' %}" width="150px" height="150px" alt="Image" class="mr-3">
+              <div class="media-body tm-bg-pink-light">
+                <div class="tm-description-box">
+                  <h5 class="tm-text-pink">Minnalmurali</h5>
+                  <p class="mb-0">The franchise consists mainly of three CGI-animated films: Kung Fu Panda (2008), Kung Fu Panda 2 (2011), and Kung Fu Panda 3 (2016) with a fourth film scheduled for release in 2024</p>
+                </div>
+                <div class="tm-buy-box">
+                  <a href="#" class="tm-bg-pink tm-text-white tm-buy">buy</a>
+                  <span class="tm-text-pink tm-price-tag">$70.0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="media">
+              <img src="{% static 'img/spiderman.jfif' %}" height="150px" width="150px" alt="Image" class="mr-3">
+              <div class="media-body tm-bg-gray">
+                <div class="tm-description-box">
+                  <h5 class="tm-text-blue">Spiderman</h5>
+                  <p class="mb-0">Spider-Man is a superhero appearing in American comic books published by Marvel Comics. Created by writer-editor Stan Lee and artist Steve Ditko, </p>
+                </div>
+                <div class="tm-buy-box">
+                  <a href="#" class="tm-bg-blue tm-text-white tm-buy">buy</a>
+                  <span class="tm-text-blue tm-price-tag">$50.0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="media">
+              <img src="{% static 'img/shershaah.jpg' %}" height="150px" width="150px" alt="Image" class="mr-3">
+              <div class="media-body tm-bg-pink-light">
+                <div class="tm-description-box">
+                  <h5 class="tm-text-pink">Shershaah</h5>
+                  <p class="mb-0">Curabitur id tempor orci. Fusce efficitur in enim sit amet sodales. Proin id gravida leo. Phasellus non quam et justo faucibus rhoncus.</p>
+                </div>
+                <div class="tm-buy-box">
+                  <a href="#" class="tm-bg-pink tm-text-white tm-buy">buy</a>
+                  <span class="tm-text-pink tm-price-tag">$30.0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="media">
+              <img src="{% static 'img/titanic.jpg' %}" height="150px" width="150px" alt="Image" class="mr-3">
+              <div class="media-body tm-bg-gray">
+                <div class="tm-description-box">
+                  <h5 class="tm-text-blue">Titanic</h5>
+                  <p class="mb-0">Maecenas sit amet nibh faucibus, tincidunt nisl sit amet, elementum eros. Fusce congue ligula gravida lorem lacinia.</p>
+                </div>
+                <div class="tm-buy-box">
+                  <a href="#" class="tm-bg-blue tm-text-white tm-buy">buy</a>
+                  <span class="tm-text-blue tm-price-tag">$50.0</span>
+                </div>
+              </div>
+            </div>
+          </div> <!-- media-boxes -->
+        </div>
+      </div>
+
+<!--      <div class="row tm-mb-big tm-subscribe-row">-->
+<!--        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 tm-bg-gray tm-subscribe-form">-->
+<!--          <h3 class="tm-text-pink tm-mb-30">Subscribe our updates!</h3>-->
+<!--          <p class="tm-mb-30">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi semper, ligula et pretium porttitor, leo orci accumsan ligula.</p>-->
+<!--          <form action="index.html" method="POST">-->
+<!--            <div class="form-group mb-0">-->
+<!--              <input type="text" class="form-control tm-subscribe-input" placeholder="Your Email">-->
+<!--              <input type="submit" value="Submit" class="tm-bg-pink tm-text-white d-block ml-auto tm-subscribe-btn">-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 img-fluid pl-0 tm-subscribe-img"></div>-->
+<!--      </div>-->
+
+      <div class="row tm-mb-medium">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
+          <h4 class="mb-4 tm-font-300">Latest Albums</h4>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Sed fringilla consectetur</a>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Mauris porta nisl quis</a>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Quisque maximus quam nec</a>
+          <a href="#" class="tm-text-blue-dark d-block">Class aptent taciti sociosqu ad</a>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
+          <h4 class="mb-4 tm-font-300">Our Pages</h4>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Nam dapibus imperdiet</a>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Primis in faucibus orci</a>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Sed interdum blandit dictum</a>
+          <a href="#" class="tm-text-blue-dark d-block">Donec non blandit nisl</a>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+          <h4 class="mb-4 tm-font-300">Quick Links</h4>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Nullam scelerisque mauris</a>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Vivamus tristique enim non orci</a>
+          <a href="#" class="tm-text-blue-dark d-block mb-2">Luctus et ultrices posuere</a>
+          <a href="#" class="tm-text-blue-dark d-block">Cubilia Curae</a>
+        </div>
+      </div>
+      <footer class="row">
+        <div class="col-xl-12">
+          <p class="text-center p-4">Copyright &copy; <span class="tm-current-year">2018</span> Your Company Name 
+          
+          - Design:  Tooplate</p>
+        </div>
+      </footer>
+    </div> <!-- .container -->
+
+  </div> <!-- .main -->
+
+  <!-- load JS -->
+  <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script> <!-- https://jquery.com/ -->
+  <script>
+
+    /* DOM is ready
+    ------------------------------------------------*/
+    $(function () {
+
+      if (renderPage) {
+        $('body').addClass('loaded');
+      }
+
+      $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright
+    });
+
+  </script>
+<!--{% block body %}-->
+<!--  <div clss="container">-->
+<!--    <div class="row">-->
+<!--        {% for i in res %}-->
+<!--        <div class="col-md-3">-->
+<!--            <div class="card" style="width: 18rem;">-->
+<!--  <img class="card-img-top" src="{{i.img.url}}" alt="Card image cap" width="100px" height="200px">-->
+<!--  <div class="card-body">-->
+<!--    <h5 class="card-title">{{i.name}}</h5>-->
+<!--     <h4 class="card-title">{{i.details}}</h4>-->
+<!--&lt;!&ndash;    <p class="card-text">{{i.desc}}</p>&ndash;&gt;-->
+<!--    <a href="{% url 'displayapp:detail' i.id %}" class="btn btn-primary">More Details</a><br><br>-->
+<!--  </div>-->
+<!--</div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--{% endblock %}-->
+  </div>
+</body>
+</html>
